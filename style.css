@@ -1,0 +1,560 @@
+/* GLOBAL RESET & THEME VARIABLES */
+* {
+    box-sizing: border-box; /* Crucial for consistent box model sizing */
+}
+
+html, body {
+    height: 100%; /* Ensures body takes full viewport height */
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+}
+
+:root {
+    --dark-blue: #1A2E40;       /* Deep, rich dark blue for backgrounds */
+    --accent-blue: #3E609A;     /* A slightly lighter, vibrant blue for accents */
+    --light-blue: #8FAADC;      /* A muted light blue for subtle highlights */
+    --text-light: #E0E0E0;      /* Off-white for general text on dark backgrounds */
+    --text-dark: #2C3E50;       /* Very dark blue for text on light backgrounds */
+    --section-bg-light: #FFFFFF; /* White for content sections */
+    --section-border: #EEEEEE;   /* Light gray for borders */
+
+    --sidebar-width: 250px; /* Define sidebar width */
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    line-height: 1.6;
+    background-color: var(--dark-blue);
+    color: var(--text-dark);
+    display: flex; /* Use flexbox for sidebar and main content layout */
+    overflow: hidden; /* Prevent body scrolling itself, as main-content-wrapper handles it */
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px; /* Ensures content has padding from sides */
+}
+
+/* SIDEBAR STYLING */
+.sidebar {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width); /* Ensure it doesn't shrink */
+    background-color: var(--dark-blue);
+    color: var(--text-light);
+    height: 100vh; /* Full viewport height */
+    position: fixed; /* Fixed position */
+    top: 0;
+    left: 0;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    display: flex; /* Flex container for header and nav list */
+    flex-direction: column;
+    z-index: 1000; /* Ensure it stays on top */
+    overflow-y: auto; /* Allow sidebar content to scroll if it overflows */
+    transition: width 0.3s ease; /* Smooth transition if sidebar width changes */
+}
+
+.sidebar-header {
+    text-align: center;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
+}
+
+/* --- NEW / MODIFIED LOGO STYLING --- */
+.sidebar-logo {
+    width: 120px; /* Larger for desktop */
+    height: 120px; /* Make height equal to width for perfect circle */
+    border-radius: 50%; /* Make it circular */
+    object-fit: cover; /* Ensure image covers the area without distortion */
+    margin: 0 auto 15px auto; /* Center horizontally and add bottom margin */
+    display: block; /* Ensures proper spacing and allows margin: auto for centering */
+    border: 4px solid var(--accent-blue); /* Add a border for emphasis */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+    transition: all 0.3s ease; /* Smooth transitions for hover/focus */
+}
+
+.sidebar-logo:hover {
+    transform: scale(1.05);
+    border-color: var(--light-blue);
+}
+
+.sidebar-header h3 {
+    color: var(--light-blue);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8em;
+    margin: 0;
+    margin-top: 10px; /* Space between logo and name */
+}
+/* --- END LOGO STYLING --- */
+
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1; /* Allows nav list to take available space */
+}
+
+.sidebar-nav li {
+    margin-bottom: 10px;
+}
+
+.sidebar-nav a {
+    display: block; /* Make the whole area clickable */
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Add transform for smooth animation */
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+    background-color: var(--accent-blue);
+    color: white;
+    text-decoration: none;
+}
+
+/* NEW: Keyframes for the "slow motion" click animation */
+@keyframes pulse-slow-motion {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); /* Slightly larger */ }
+    100% { transform: scale(1); }
+}
+
+/* NEW: Class applied by JavaScript for the slow motion animation */
+.sidebar-nav a.clicked-slow-motion {
+    animation: pulse-slow-motion 0.5s ease-out; /* 0.5 seconds duration */
+    background-color: var(--accent-blue); /* Keep background consistent during animation */
+    color: white; /* Keep text consistent during animation */
+}
+
+
+/* MAIN CONTENT WRAPPER - SCROLLABLE */
+.main-content-wrapper {
+    margin-left: var(--sidebar-width); /* Push content to the right of the sidebar */
+    flex-grow: 1; /* Allow content to fill remaining space */
+    overflow-y: auto; /* IMPORTANT: Allows this entire wrapper to scroll vertically */
+    height: 100vh; /* IMPORTANT: Make wrapper take full height for scrolling */
+    transition: margin-left 0.3s ease; /* Smooth transition if sidebar hides/changes */
+}
+
+
+/* HERO SECTION */
+.hero-section {
+    background-color: var(--dark-blue);
+    color: var(--text-light);
+    text-align: center;
+    padding: 80px 20px;
+    border-bottom: 5px solid var(--accent-blue);
+}
+
+.hero-section h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.5em;
+    margin-bottom: 10px;
+    color: var(--light-blue);
+}
+
+.hero-section .tagline {
+    font-size: 1.4em;
+    font-weight: 300;
+    color: var(--text-light);
+}
+
+/* SECTIONS */
+section {
+    padding: 60px 0; /* Vertical padding */
+    margin-bottom: 20px;
+    background-color: var(--section-bg-light);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition for hover effect */
+}
+
+section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+}
+
+/* ANIMATIONS */
+@keyframes fadeInBottom {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animated-section {
+    opacity: 0; /* Start hidden */
+    animation: fadeInBottom 0.8s ease-out forwards; /* Apply animation */
+}
+
+/* Sequential animation timing for each section */
+#about-me.animated-section { animation-delay: 0.2s; }
+#personal-details.animated-section { animation-delay: 0.4s; }
+#skills.animated-section { animation-delay: 0.6s; }
+#education.animated-section { animation-delay: 0.8s; }
+#projects.animated-section { animation-delay: 1.0s; }
+
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5em;
+    color: var(--dark-blue);
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 80px;
+    height: 4px;
+    background-color: var(--accent-blue);
+    border-radius: 2px;
+}
+
+h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6em;
+    color: var(--accent-blue);
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+/* ABOUT ME SECTION SPECIFIC */
+.about-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 30px;
+}
+
+.about-text {
+    flex: 2;
+    min-width: 300px;
+}
+
+.about-image {
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+}
+
+.about-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 3px solid var(--light-blue);
+    transition: transform 0.3s ease; /* Animation for image hover */
+}
+
+.about-image img:hover {
+    transform: scale(1.03); /* Subtle zoom on hover */
+}
+
+
+/* PARAGRAPHS & LISTS */
+p {
+    font-size: 1.1em;
+    line-height: 1.7;
+    margin-bottom: 15px;
+    color: var(--text-dark);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+    font-size: 1.05em;
+    color: var(--text-dark);
+}
+
+ul li::before {
+    content: '\2022';
+    color: var(--accent-blue);
+    font-size: 1.2em;
+    position: absolute;
+    left: 0;
+    top: 0;
+    line-height: inherit;
+}
+
+.skills-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.skills-list li {
+    background-color: var(--section-border);
+    padding: 10px 15px;
+    border-left: 3px solid var(--accent-blue);
+    border-radius: 4px;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.skills-list li::before {
+    content: none;
+}
+
+
+/* EDUCATION & PROJECT ITEMS */
+.education-item,
+.project-item {
+    margin-bottom: 40px;
+    padding: 25px;
+    border: 1px solid var(--section-border);
+    border-radius: 8px;
+    background-color: var(--section-bg-light);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.education-item:hover,
+.project-item:hover {
+    border-color: var(--accent-blue);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.education-item h3,
+.project-item h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--dark-blue);
+    font-size: 1.4em;
+    position: relative;
+    padding-left: 20px;
+}
+
+.education-item h3::before,
+.project-item h3::before {
+    content: '\2022';
+    color: var(--accent-blue);
+    font-size: 1.2em;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.project-description {
+    font-style: italic;
+    color: var(--text-dark);
+}
+
+.project-tech {
+    font-weight: 700;
+    color: var(--dark-blue);
+    margin-top: 10px;
+}
+
+.project-contributions li {
+    font-size: 1em;
+    margin-bottom: 5px;
+    padding-left: 20px;
+}
+
+.project-links a {
+    display: inline-block;
+    background-color: var(--accent-blue);
+    color: var(--text-light);
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-right: 10px;
+    margin-top: 15px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.project-links a:hover {
+    background-color: var(--dark-blue);
+    color: var(--light-blue);
+    text-decoration: none;
+}
+
+
+/* LINKS GENERAL */
+a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--dark-blue);
+    text-decoration: underline;
+}
+
+/* FOOTER */
+footer {
+    background-color: var(--dark-blue);
+    color: var(--text-light);
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+
+/* RESPONSIVE DESIGN - ADJUST FOR SMALLER SCREENS */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column; /* Stack sidebar and content vertically */
+        overflow-y: auto; /* Allow body to scroll itself now that sidebar is not fixed */
+    }
+
+    .sidebar {
+        position: relative; /* Remove fixed position */
+        width: 100%; /* Take full width */
+        height: auto; /* Height adapts to content */
+        padding: 10px 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        overflow-y: hidden; /* Prevent sidebar from scrolling internally when horizontal */
+        display: block; /* Ensure it behaves as a block element on small screens */
+    }
+
+    .sidebar-header {
+        display: flex; /* Use flexbox to center logo and hide name */
+        flex-direction: column; /* Stack logo and name (if visible) vertically */
+        align-items: center; /* Center horizontally in flex container */
+        padding-bottom: 10px; /* Adjust padding */
+        margin-bottom: 10px; /* Adjust margin */
+        border-bottom: none; /* Remove separator for cleaner mobile look */
+    }
+
+    .sidebar-header h3 {
+        display: none; /* Hide the name on smaller screens to save space */
+    }
+
+    .sidebar-logo {
+        width: 80px; /* Smaller logo for mobile */
+        height: 80px; /* Keep it circular */
+        margin: 0 auto 10px auto; /* Center and reduce margin */
+        border-width: 3px; /* Slightly thinner border for mobile */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Lighter shadow */
+    }
+
+    .sidebar-nav {
+        flex-direction: row; /* Make navigation horizontal */
+        justify-content: space-around; /* Distribute items evenly */
+        padding: 0 10px;
+        flex-wrap: wrap; /* Allow links to wrap to next line if space is tight */
+        border-top: 1px solid rgba(255, 255, 255, 0.1); /* Add a top border for navigation */
+        padding-top: 10px; /* Padding above buttons */
+    }
+
+    .sidebar-nav li {
+        margin: 5px; /* Adjust margin for horizontal layout */
+    }
+
+    .sidebar-nav a {
+        padding: 8px 12px;
+        font-size: 0.95em;
+        text-align: center; /* Ensure text is centered if links are stacked */
+    }
+
+    .main-content-wrapper {
+        margin-left: 0; /* Remove margin-left when sidebar is stacked */
+        height: auto; /* Height adapts to content */
+        overflow-y: visible; /* Allow normal document scrolling */
+        flex-shrink: 0; /* Prevent it from shrinking more than content needs */
+    }
+
+    /* Adjust specific section paddings to ensure content fits */
+    .hero-section, section, footer {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .hero-section h1 {
+        font-size: 2.5em;
+    }
+
+    .hero-section .tagline {
+        font-size: 1.1em;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+
+    section {
+        padding: 40px 0;
+    }
+
+    .about-content {
+        flex-direction: column; /* Stack image and text vertically */
+    }
+
+    .about-image {
+        order: -1; /* Place image above text on small screens */
+        margin-bottom: 20px;
+    }
+
+    .skills-list {
+        grid-template-columns: 1fr; /* Single column on smaller screens */
+    }
+
+    ul li {
+        padding-left: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section h1 {
+        font-size: 2em;
+    }
+
+    .hero-section .tagline {
+        font-size: 1em;
+    }
+
+    h2 {
+        font-size: 1.8em;
+        margin-bottom: 30px;
+    }
+
+    h3 {
+        font-size: 1.3em;
+    }
+
+    p, ul li {
+        font-size: 1em;
+    }
+
+    .project-links a {
+        display: block; /* Stack links vertically */
+        margin-right: 0;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+}
